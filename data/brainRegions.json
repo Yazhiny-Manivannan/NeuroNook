@@ -1,0 +1,180 @@
+
+[
+  {
+    "id": 1,
+    "name": "Cerebrum",
+    "short_description": "The top part of the brain, where conscious thoughts, memories and planning happen.",
+    "description": "The cerebrum is the part of the brain that people usually notice in pictures. It sits at the topmost part of the brain and is the source of conscious thoughts and actions. It is involved in memory and lets you plan, imagine, think, recognise friends and read. A deep fissure splits it into a left and a right half, called hemispheres, which communicate through a thick band of nerve fibres called the corpus callosum. The two halves are not exact copies: the ability to form words seems to lie mainly in the left hemisphere, and the right hemisphere seems to control many abstract reasoning skills. These are tendencies, not separate jobs, because all parts of the brain work together. Most of the brain's information processing happens in the wrinkled outer layer, the cortex. Each hemisphere mainly controls the opposite side of the body, so damage to one side of the brain affects the other side of the body.",
+    "functions": [
+      "Conscious thinking, planning and imagination",
+      "Memory, working together with other brain areas such as the hippocampus",
+      "Recognising people and reading",
+      "Language and reasoning, with some abilities leaning more on the left or the right hemisphere while both work together",
+      "Controlling the opposite side of the body"
+    ],
+    "location": "The topmost part of the brain, split into a left and a right hemisphere.",
+    "source_name": "NINDS (NIH) - Brain Basics: Know Your Brain",
+    "source_url": "https://www.ninds.nih.gov/health-information/public-education/brain-basics/brain-basics-know-your-brain",
+    "additional_sources": []
+  },
+  {
+    "id": 2,
+    "name": "Cerebellum",
+    "short_description": "A wrinkled structure at the back of the brain that helps coordinate movement, balance and posture.",
+    "description": "The cerebellum is the largest part of the hindbrain. It sits at the back of the brain, behind the brainstem, and is made of two halves joined by a middle strip called the vermis. Its main job is to regulate movement and balance. It helps coordinate walking (gait), maintain posture and control muscle tone and voluntary muscle activity. It does not start a movement by itself; it fine-tunes movements that are started elsewhere. It receives information about movement from the cerebral cortex and from muscles, tendons and joints, and information about balance from the vestibular nuclei. The cerebellum contains about 80% of the brain's neurons. Damage to it can make it hard to control fine movements, keep good posture and learn new movements.",
+    "functions": [
+      "Coordinating movement",
+      "Controlling balance",
+      "Maintaining posture and muscle tone",
+      "Coordinating walking (gait)",
+      "Motor learning (learning new movements)"
+    ],
+    "location": "At the back of the brain, behind the brainstem, in the lower back part of the skull (the posterior cranial fossa).",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Cerebellum",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK538167/",
+    "additional_sources": []
+  },
+  {
+    "id": 3,
+    "name": "Brainstem",
+    "short_description": "Connects the cerebrum to the spinal cord and supports vital functions such as breathing and heart rate.",
+    "description": "The brainstem joins the cerebrum to the spinal cord and the cerebellum. It has three sections from top to bottom: the midbrain, the pons and the medulla oblongata. Nerve pathways carrying messages to and from the brain run through it. It is responsible for many vital functions of life, including breathing, consciousness, blood pressure, heart rate and sleep. Ten of the twelve cranial nerves, the nerves that leave the brain, start from nerve cell groups in the brainstem. The midbrain, for example, is involved in visual reflexes such as quick eye movements and in processing sound.",
+    "functions": [
+      "Helping to control breathing",
+      "Helping to regulate heart rate and blood pressure",
+      "Supporting consciousness and sleep",
+      "Carrying messages between the brain and the spinal cord",
+      "Giving rise to ten of the twelve cranial nerves"
+    ],
+    "location": "At the base of the brain, joining the cerebrum to the spinal cord and connected to the cerebellum.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Brainstem",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK544297/",
+    "additional_sources": []
+  },
+  {
+    "id": 4,
+    "name": "Hippocampus",
+    "short_description": "A seahorse-shaped structure deep in the temporal lobe that helps turn new experiences into long-lasting memories.",
+    "description": "The hippocampus is a seahorse-shaped structure deep inside the medial (inner) part of the temporal lobe, roughly behind the ears. It is critical for forming new memories of events and helping them become long-lasting, a process called memory consolidation. It does not work alone: it works with other brain areas to help consolidate and retrieve long-term memories. People with damage to the hippocampus often develop anterograde amnesia, which means they struggle to form new memories after the damage, while they can generally still remember events from before it. The hippocampus also contributes to decision-making, but indirectly, because it does not make decisions itself. Research suggests it helps by recalling past experiences and combining them to imagine possible outcomes, which the brain can use to compare its options.",
+    "functions": [
+      "Forming new memories of events and helping them become long-lasting (memory consolidation)",
+      "Working with other brain areas to help consolidate and retrieve long-term memories",
+      "Supporting decision-making indirectly, by recalling past experiences to compare options",
+      "Helping us imagine possible future situations"
+    ],
+    "location": "Deep inside the medial (inner) part of the temporal lobe, roughly behind the ears.",
+    "source_name": "Frontiers for Young Minds - Time Travel in the Brain (Biderman & Shohamy, 2020)",
+    "source_url": "https://kids.frontiersin.org/articles/10.3389/frym.2019.00152",
+    "additional_sources": [
+      {
+        "source_name": "Biderman, Bakkour & Shohamy (2020) - What Are Memories For? The Hippocampus Bridges Past Experience with Future Decisions",
+        "source_url": "https://doi.org/10.1016/j.tics.2020.04.004"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Amygdala",
+    "short_description": "An almond-shaped structure in the temporal lobe involved in emotions, especially fear, and emotional memory.",
+    "description": "The amygdala is named after its almond shape. It lies in the temporal lobe, just beneath a part called the uncus, and is made up of about 13 clusters of nerve cells (nuclei). It is part of the limbic system, the network that helps control emotions, behaviour and memory formation. The amygdala is involved in anxiety, aggression, fear learning, emotional memory and social understanding. When an experience causes an emotional response, the amygdala can influence how well that memory is learned and stored. It also helps manage the flow of information between association areas of the cortex and the hypothalamus.",
+    "functions": [
+      "Processing emotions such as fear and anxiety",
+      "Fear learning (fear conditioning)",
+      "Helping emotional experiences to be remembered",
+      "Supporting social cognition (understanding social situations)",
+      "Passing information between the cortex and the hypothalamus"
+    ],
+    "location": "Deep inside the temporal lobe, just beneath the uncus and in front of the hippocampus.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Amygdala",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK537102/",
+    "additional_sources": []
+  },
+  {
+    "id": 6,
+    "name": "Thalamus",
+    "short_description": "A gateway near the centre of the brain that relays most sensory information, plus motor and limbic signals, to the cortex.",
+    "description": "The thalamus is a paired structure made of grey matter, found near the centre of the brain just above the brainstem, with one thalamus on each side of the third ventricle. The two thalami may be joined by a small bridge of tissue called the interthalamic adhesion, but this bridge is missing in some people. The thalamus works as a gateway to the cerebral cortex. Almost all signals travelling up to the cortex first connect in a thalamic nucleus (a cluster of nerve cells), where they are sorted and passed on. This includes motor and limbic signals and most sensory information, such as vision, hearing, taste and touch. Smell is an important exception, because signals from the nose do not use a thalamic relay in the same way. For example, the lateral geniculate nucleus relays visual information from the retina to the visual cortex. The thalamus also helps regulate consciousness, sleep and alertness.",
+    "functions": [
+      "Relaying most sensory information to the cerebral cortex (smell is an exception)",
+      "Relaying motor and limbic (emotion-related) signals to the cortex",
+      "Sorting and filtering signals before they reach the cortex",
+      "Regulating consciousness, sleep and alertness",
+      "Contributing to memory and attention through links with the limbic system"
+    ],
+    "location": "Near the centre of the brain, just above the brainstem, with one thalamus on each side of the third ventricle.",
+    "source_name": "Kenhub - Thalamic nuclei (expert-reviewed anatomy article)",
+    "source_url": "https://www.kenhub.com/en/library/anatomy/thalamic-nuclei",
+    "additional_sources": [
+      {
+        "source_name": "Duque Parra, Pava Ripoll & Vélez García (2022) - Interthalamic adhesion in humans: a gray commissure?",
+        "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8968232/"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Hypothalamus",
+    "short_description": "A control centre at the base of the brain that coordinates hormones and body functions like temperature and appetite.",
+    "description": "The hypothalamus lies at the bottom of the brain, above the pituitary gland and below the third ventricle. It coordinates the endocrine (hormone) system. It receives signals from many parts of the brain and responds by releasing hormones that act on the pituitary gland, which in turn directs glands such as the thyroid, the adrenal glands and the reproductive organs. Through these hormones it influences growth, fluid balance and milk production. It is also involved in regulating body temperature, the autonomic nervous system (the automatic functions of the body) and appetite. Two hormones, oxytocin and vasopressin, are made in the hypothalamus itself and travel along its nerve cells to the back part of the pituitary gland.",
+    "functions": [
+      "Coordinating the hormone system through the pituitary gland",
+      "Helping to regulate body temperature",
+      "Helping to regulate appetite",
+      "Helping to regulate the autonomic nervous system",
+      "Influencing growth, fluid balance and milk production"
+    ],
+    "location": "At the base of the brain, above the pituitary gland and below the third ventricle.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Physiology, Hypothalamus",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK535380/",
+    "additional_sources": []
+  },
+  {
+    "id": 8,
+    "name": "Frontal lobe",
+    "short_description": "The front part of each cerebral hemisphere, involved in planning, personality, speech and movement.",
+    "description": "The frontal lobe is the front section of each cerebral hemisphere. It lies in front of a groove called the central sulcus and above another groove, the lateral fissure. It handles executive functions (the thinking skills used to plan and manage behaviour) and motor functions. These include judgment, problem-solving, planning, concentration and self-awareness, and it helps shape behaviour and personality. It also contains the primary motor cortex, which controls movement of the opposite side of the body; a large share of this area is devoted to the fine control of the hands, face and lips. Broca's area, which is important for producing speech, is also in the frontal lobe, usually on the left side.",
+    "functions": [
+      "Planning, judgment and problem-solving",
+      "Concentration and self-awareness",
+      "Shaping behaviour and personality",
+      "Speech production (Broca's area)",
+      "Controlling movement of the opposite side of the body (primary motor cortex)"
+    ],
+    "location": "At the front of each cerebral hemisphere, in front of the central sulcus.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Cerebral Hemisphere",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK549789/",
+    "additional_sources": []
+  },
+  {
+    "id": 9,
+    "name": "Parietal lobe",
+    "short_description": "Processes touch, temperature, pain and other sensations, helping us to perceive the world around us.",
+    "description": "The parietal lobe sits behind the central sulcus and in front of the parieto-occipital sulcus. Its main roles are perception and sensation. A strip of tissue just behind the central sulcus, called the postcentral gyrus, holds the primary somatosensory cortex, which handles touch, temperature and pain from the opposite side of the body. As in the motor cortex, a large share of this area is devoted to the hands, face and lips. Damage causes different problems depending on the side. Damage to the left (dominant) parietal lobe can cause Gerstmann syndrome, which includes trouble writing, calculating, recognising fingers and telling left from right. Damage to the right parietal lobe can cause hemispatial neglect, where a person is unaware of the left side of the world around them.",
+    "functions": [
+      "Perceiving and processing sensations",
+      "Sensing touch, temperature and pain from the opposite side of the body",
+      "Awareness of the space around us (right-side damage can cause neglect of the left side of the world)"
+    ],
+    "location": "Behind the central sulcus, which separates it from the frontal lobe, and in front of the parieto-occipital sulcus.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Cerebral Hemisphere",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK549789/",
+    "additional_sources": []
+  },
+  {
+    "id": 10,
+    "name": "Temporal lobe",
+    "short_description": "Involved in hearing, understanding speech and forming memories; it contains the hippocampus and amygdala.",
+    "description": "The temporal lobe lies below the lateral (Sylvian) fissure, a deep groove on the side of the brain. It is divided into superior, middle and inferior parts and is found mainly in the middle cranial fossa, close to the base of the skull. Different parts of it are linked to different skills: the upper (superior) part to hearing and to perceiving and producing speech, inner (medial) structures to episodic memory (memory of personal experiences), and the lower (ventral) part to the meaning of words and objects. Other areas are linked to social and emotional processing. The temporal lobe also houses two key structures, the hippocampus and the amygdala.",
+    "functions": [
+      "Hearing",
+      "Perceiving and producing speech",
+      "Episodic memory (through its inner, medial structures)",
+      "Understanding meaning (semantic processing)",
+      "Social and emotional processing"
+    ],
+    "location": "On the side of each cerebral hemisphere, below the lateral (Sylvian) fissure.",
+    "source_name": "StatPearls (NCBI Bookshelf) - Neuroanatomy, Temporal Lobe",
+    "source_url": "https://www.ncbi.nlm.nih.gov/books/NBK519512/",
+    "additional_sources": []
+  }
+]
