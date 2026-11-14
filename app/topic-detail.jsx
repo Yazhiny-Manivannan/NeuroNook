@@ -12,6 +12,11 @@ import {
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { Colors } from '../constants/Colors'
 import { getBrainRegionById } from '../database/brainRegionQueries'
+import {
+  saveTopic,
+  removeSavedTopic,
+  isTopicSaved,
+} from '../database/savedTopicQueries'
 
 const TopicDetail = () => {
   const { id, title } = useLocalSearchParams()
@@ -19,6 +24,8 @@ const TopicDetail = () => {
   const [region, setRegion] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isSaved, setIsSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -32,6 +39,7 @@ const TopicDetail = () => {
         }
 
         const data = await getBrainRegionById(regionId)
+        const saved = await isTopicSaved(regionId)
 
         if (!data) {
           throw new Error('Brain region not found.')
@@ -39,6 +47,7 @@ const TopicDetail = () => {
 
         if (isMounted) {
           setRegion(data)
+          setIsSaved(saved)
         }
       } catch (err) {
         console.error('Failed to load brain region:', err)
@@ -66,6 +75,25 @@ const TopicDetail = () => {
     })
   }
 
+  const toggleSave = async () => {
+  if (!region || saving) return
+
+  try {
+    setSaving(true)
+
+    if (isSaved) {
+      await removeSavedTopic(region.id)
+      setIsSaved(false)
+    } else {
+      await saveTopic(region.id)
+      setIsSaved(true)
+    }
+  } catch (err) {
+    console.error('Bookmark operation failed:', err)
+  } finally {
+    setSaving(false)
+  }
+}
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -87,7 +115,19 @@ const TopicDetail = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.card}>
             <Text style={styles.title}>{region.name}</Text>
-
+            <Pressable
+              onPress={toggleSave}
+              disabled={saving}
+              style={styles.bookmarkButton}
+            >
+              <Text style={styles.bookmarkText}>
+                {saving
+                  ? 'Please wait...'
+                  : isSaved
+                    ? '✓ Saved Topic'
+                    : '☆ Save Topic'}
+              </Text>
+            </Pressable>
             <Text style={styles.shortDescription}>
               {region.short_description}
             </Text>
@@ -222,5 +262,21 @@ const styles = StyleSheet.create({
   error: {
     color: Colors.navy,
     textAlign: 'center',
+  },
+
+  bookmarkButton: {
+    backgroundColor: Colors.lightBlue,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 10,
+    padding: 12,
+    marginTop: 14,
+    alignItems: 'center',
+  },
+
+  bookmarkText: {
+    color: Colors.navy,
+    fontSize: 15,
+    fontWeight: 'bold',
   },
 })

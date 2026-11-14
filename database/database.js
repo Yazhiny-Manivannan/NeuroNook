@@ -13,10 +13,11 @@ export async function getDatabase() {
   return dbPromise;
 }
 
-// Create the brain_regions table and insert the initial dataset.
+// Create database tables and insert the initial brain-region data.
 export async function initializeDatabase() {
   const db = await getDatabase();
 
+  // Store brain-region information.
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS brain_regions (
       id INTEGER PRIMARY KEY NOT NULL,
@@ -28,6 +29,15 @@ export async function initializeDatabase() {
       source_name TEXT NOT NULL,
       source_url TEXT NOT NULL,
       additional_sources TEXT NOT NULL DEFAULT '[]'
+    );
+  `);
+
+  // Store bookmarked brain regions.
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS saved_topics (
+      region_id INTEGER PRIMARY KEY NOT NULL,
+      saved_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (region_id) REFERENCES brain_regions(id)
     );
   `);
 
