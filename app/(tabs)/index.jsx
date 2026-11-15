@@ -68,7 +68,7 @@ const Home = () => {
       {/* Main hero card */}
       <View style={styles.heroCard}>
         <Image
-          source={require('../../assets/illustrations/home-brain-hero.png')}
+          source={require('../../assets/home/neuroscience-welcome.png')}
           style={styles.heroImage}
           resizeMode="contain"
           accessibilityLabel="Neuroscience brain illustration"
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
 
   heroCard: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.navy,
     borderRadius: 20,
     padding: 16,
     marginBottom: 26,
@@ -148,14 +148,14 @@ const styles = StyleSheet.create({
   heroTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.navy,
+    color: Colors.white,
     textAlign: 'center',
     marginBottom: 8,
   },
 
   heroDescription: {
     fontSize: 14,
-    color: Colors.textMuted,
+    color: Colors.white,
     textAlign: 'center',
     lineHeight: 21,
   },
