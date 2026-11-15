@@ -1,13 +1,23 @@
-
 import React from 'react'
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../constants/Colors'
+
+// Local illustrations bundled with the app.
+const systemImages = {
+  complete: require('../assets/nervous-system/complete-human-nervous-system.png'),
+  central: require('../assets/nervous-system/central-nervous-system.png'),
+  peripheral: require('../assets/nervous-system/peripheral-nervous-system.png'),
+  somatic: require('../assets/nervous-system/somatic-nervous-system.png'),
+  autonomic: require('../assets/nervous-system/autonomic-nervous-system.png'),
+  divisions: require('../assets/nervous-system/sympathetic-parasympathetic-divisions.png'),
+}
 
 // Reusable heading for each section.
 const SectionHeading = ({ title }) => (
@@ -15,7 +25,7 @@ const SectionHeading = ({ title }) => (
 )
 
 // Reusable information card.
-const InfoCard = ({ icon, title, description, points }) => (
+const InfoCard = ({ icon, title, description, points, image }) => (
   <View style={styles.card}>
     <View style={styles.cardHeader}>
       <View style={styles.iconBox}>
@@ -24,6 +34,14 @@ const InfoCard = ({ icon, title, description, points }) => (
 
       <Text style={styles.cardTitle}>{title}</Text>
     </View>
+
+    {image && (
+      <Image
+        source={image}
+        style={styles.cardImage}
+        resizeMode="contain"
+      />
+    )}
 
     <Text style={styles.description}>{description}</Text>
 
@@ -69,6 +87,16 @@ const NervousSystem = () => {
       <View style={styles.overviewCard}>
         <Text style={styles.overviewTitle}>What is the Nervous System?</Text>
 
+        <Image
+          source={systemImages.complete}
+          style={styles.overviewImage}
+          resizeMode="contain"
+        />
+
+        <Text style={styles.imageCaption}>
+          Complete Human Nervous System
+        </Text>
+
         <Text style={styles.description}>
           The nervous system is the body's communication and
           control network. It receives information, processes it
@@ -82,6 +110,7 @@ const NervousSystem = () => {
       <InfoCard
         icon="hardware-chip"
         title="Central Nervous System (CNS)"
+        image={systemImages.central}
         description="The CNS is the main control centre of the body. It consists of two major parts:"
         points={[
           'Brain – processes information, controls thoughts, memory and body activities.',
@@ -92,6 +121,7 @@ const NervousSystem = () => {
       <InfoCard
         icon="git-network"
         title="Peripheral Nervous System (PNS)"
+        image={systemImages.peripheral}
         description="The PNS includes all nerves outside the brain and spinal cord. It connects the CNS with the rest of the body."
         points={[
           'Carries sensory information towards the CNS.',
@@ -105,6 +135,7 @@ const NervousSystem = () => {
       <InfoCard
         icon="body"
         title="Somatic Nervous System"
+        image={systemImages.somatic}
         description="Responsible for voluntary movements and communication with skeletal muscles."
         points={[
           'Helps you walk, write and move your hands.',
@@ -115,6 +146,7 @@ const NervousSystem = () => {
       <InfoCard
         icon="pulse"
         title="Autonomic Nervous System"
+        image={systemImages.autonomic}
         description="Controls many involuntary activities of internal organs."
         points={[
           'Regulates heart rate and digestion.',
@@ -124,7 +156,18 @@ const NervousSystem = () => {
       />
 
       {/* Autonomic divisions */}
-      <SectionHeading title="Autonomic Nervous System" />
+      <SectionHeading title="Sympathetic vs Parasympathetic Divisions" />
+
+      <View style={styles.divisionImageCard}>
+        <Image
+          source={systemImages.divisions}
+          style={styles.divisionImage}
+          resizeMode="contain"
+        />
+        <Text style={styles.imageCaption}>
+          Sympathetic and Parasympathetic Divisions
+        </Text>
+      </View>
 
       <View style={styles.comparisonCard}>
         <View style={styles.comparisonItem}>
@@ -199,7 +242,7 @@ const NervousSystem = () => {
           ['3', 'CNS', 'Processes the information and coordinates a response.'],
           ['4', 'Motor neuron', 'Carries commands towards an effector.'],
           ['5', 'Effector', 'A muscle or gland performs the response.'],
-        ].map((step, index) => (
+        ].map((step) => (
           <View style={styles.stepRow} key={step[0]}>
             <View style={styles.stepNumber}>
               <Text style={styles.stepNumberText}>{step[0]}</Text>
@@ -292,6 +335,18 @@ const styles = StyleSheet.create({
     color: Colors.navy,
     marginBottom: 9,
   },
+  overviewImage: {
+    width: '100%',
+    height: 230,
+    marginVertical: 5,
+  },
+  imageCaption: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: Colors.navyMid,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
   sectionHeading: {
     fontSize: 19,
     fontWeight: 'bold',
@@ -327,6 +382,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.navy,
   },
+  cardImage: {
+    width: '100%',
+    height: 190,
+    backgroundColor: '#F1F6FC',
+    borderRadius: 12,
+    marginBottom: 14,
+  },
   description: {
     fontSize: 14,
     color: Colors.textMuted,
@@ -343,6 +405,20 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 20,
     color: Colors.navy,
+  },
+  divisionImageCard: {
+    backgroundColor: Colors.white,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: 12,
+    marginBottom: 14,
+  },
+  divisionImage: {
+    width: '100%',
+    height: 210,
+    backgroundColor: '#F1F6FC',
+    borderRadius: 10,
   },
   comparisonCard: {
     backgroundColor: Colors.white,

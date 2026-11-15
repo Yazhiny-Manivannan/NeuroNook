@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native'
 import { useFocusEffect, useRouter } from 'expo-router'
 import { Colors } from '../../constants/Colors'
@@ -117,7 +118,10 @@ const SavedTopics = () => {
         data={topics}
         keyExtractor={(item) => String(item.id)}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[
+          styles.listContent,
+          topics.length === 0 && styles.emptyListContent,
+        ]}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Pressable
@@ -147,7 +151,12 @@ const SavedTopics = () => {
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>☆</Text>
+            <Image
+              source={require('../../assets/saved-topics/empty-saved-topics.png')}
+              style={styles.emptyImage}
+              resizeMode="contain"
+              accessibilityLabel="Illustration for an empty saved topics list"
+            />
 
             <Text style={styles.emptyTitle}>
               No saved topics yet
@@ -187,6 +196,9 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 25,
+    flexGrow: 1,
+  },
+  emptyListContent: {
     flexGrow: 1,
   },
   card: {
@@ -233,17 +245,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
+    padding: 20,
   },
-  emptyIcon: {
-    fontSize: 48,
-    color: Colors.navyMid,
+  emptyImage: {
+    width: '100%',
+    height: 220,
+    marginBottom: 8,
   },
   emptyTitle: {
     fontSize: 19,
     fontWeight: 'bold',
     color: Colors.navy,
-    marginTop: 15,
+    marginTop: 10,
   },
   emptyText: {
     fontSize: 14,
