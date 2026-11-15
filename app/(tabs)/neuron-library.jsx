@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from 'react'
 import {
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +11,17 @@ import {
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../constants/Colors'
+
+// Local illustrations bundled with the app.
+const neuronImages = {
+  sensory: require('../../assets/neurons/pseudounipolar-neuron.png'),
+  motor: require('../../assets/neurons/multipolar-neuron.png'),
+  interneuron: require('../../assets/neurons/chemical-synapse.png'),
+  anatomy: require('../../assets/neurons/general-neuron-anatomy.png'),
+  bipolar: require('../../assets/neurons/bipolar-neuron.png'),
+  myelinated: require('../../assets/neurons/myelinated-neuron.png'),
+  unmyelinated: require('../../assets/neurons/unmyelinated-neuron.png'),
+}
 
 // Local neuron information. No internet connection is required.
 const neuronTypes = [
@@ -21,7 +33,8 @@ const neuronTypes = [
       'Sensory neurons detect information from the environment and the body. They carry signals from sensory receptors to the central nervous system.',
     function: 'Transmit sensory information such as touch, pain, temperature and sound.',
     example: 'Feeling the heat when you touch a hot object.',
-    icon: 'eye-outline',
+    image: neuronImages.sensory,
+    imageLabel: 'Pseudounipolar neuron',
   },
   {
     id: '2',
@@ -31,7 +44,8 @@ const neuronTypes = [
       'Motor neurons transmit signals from the brain and spinal cord to muscles or glands. They help the body produce actions and responses.',
     function: 'Control muscle movements and some gland activities.',
     example: 'Moving your hand to pick up a book.',
-    icon: 'body-outline',
+    image: neuronImages.motor,
+    imageLabel: 'Multipolar neuron',
   },
   {
     id: '3',
@@ -41,7 +55,8 @@ const neuronTypes = [
       'Interneurons connect sensory neurons and motor neurons. They help process information and support communication within the brain and spinal cord.',
     function: 'Process information and connect different neurons.',
     example: 'Helping coordinate a quick withdrawal reflex.',
-    icon: 'git-network-outline',
+    image: neuronImages.interneuron,
+    imageLabel: 'Chemical synapse',
   },
 ]
 
@@ -65,6 +80,27 @@ const neuronParts = [
   {
     name: 'Axon terminals',
     description: 'Pass signals to another cell at a synapse.',
+  },
+]
+
+const neuronStructures = [
+  {
+    id: 'bipolar',
+    name: 'Bipolar Neuron',
+    description: 'Has two extensions: one dendrite and one axon.',
+    image: neuronImages.bipolar,
+  },
+  {
+    id: 'myelinated',
+    name: 'Myelinated Neuron',
+    description: 'Has a myelin sheath around its axon.',
+    image: neuronImages.myelinated,
+  },
+  {
+    id: 'unmyelinated',
+    name: 'Unmyelinated Neuron',
+    description: 'Has an axon without a myelin sheath.',
+    image: neuronImages.unmyelinated,
   },
 ]
 
@@ -93,13 +129,16 @@ const NeuronLibrary = () => {
           style={styles.neuronHeader}
           onPress={() => setExpandedId(isExpanded ? null : item.id)}
         >
-          <View style={styles.iconCircle}>
-            <Ionicons name={item.icon} size={25} color={Colors.white} />
-          </View>
+          <Image
+            source={item.image}
+            style={styles.neuronImage}
+            resizeMode="contain"
+          />
 
           <View style={styles.neuronText}>
             <Text style={styles.neuronName}>{item.name}</Text>
             <Text style={styles.subtitle}>{item.subtitle}</Text>
+            <Text style={styles.imageLabel}>{item.imageLabel}</Text>
           </View>
 
           <Ionicons
@@ -176,6 +215,15 @@ const NeuronLibrary = () => {
             Learn the basic structures of a typical neuron.
           </Text>
 
+          <View style={styles.anatomyCard}>
+            <Image
+              source={neuronImages.anatomy}
+              style={styles.anatomyImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.imageCaption}>General neuron anatomy</Text>
+          </View>
+
           {neuronParts.map((part, index) => (
             <View key={part.name} style={styles.partCard}>
               <View style={styles.numberCircle}>
@@ -184,6 +232,27 @@ const NeuronLibrary = () => {
               <View style={styles.partText}>
                 <Text style={styles.partName}>{part.name}</Text>
                 <Text style={styles.detailText}>{part.description}</Text>
+              </View>
+            </View>
+          ))}
+
+          <Text style={styles.sectionTitle}>Neuron Structures</Text>
+          <Text style={styles.hint}>
+            Explore some different neuron structures.
+          </Text>
+
+          {neuronStructures.map((structure) => (
+            <View key={structure.id} style={styles.structureCard}>
+              <Image
+                source={structure.image}
+                style={styles.structureImage}
+                resizeMode="contain"
+              />
+              <View style={styles.structureText}>
+                <Text style={styles.partName}>{structure.name}</Text>
+                <Text style={styles.detailText}>
+                  {structure.description}
+                </Text>
               </View>
             </View>
           ))}
@@ -238,7 +307,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.navy,
     marginBottom: 5,
-    marginTop: 8,
+    marginTop: 18,
   },
   hint: {
     fontSize: 13,
@@ -256,20 +325,18 @@ const styles = StyleSheet.create({
   neuronHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 13,
+    padding: 12,
   },
-  iconCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: Colors.navyMid,
-    alignItems: 'center',
-    justifyContent: 'center',
+  neuronImage: {
+    width: 88,
+    height: 88,
+    borderRadius: 10,
+    backgroundColor: '#F1F6FC',
     marginRight: 12,
   },
   neuronText: {
     flex: 1,
-    marginRight: 8,
+    marginRight: 6,
   },
   neuronName: {
     fontSize: 16,
@@ -279,8 +346,14 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 12,
     color: Colors.textMuted,
-    marginTop: 3,
+    marginTop: 4,
     lineHeight: 17,
+  },
+  imageLabel: {
+    fontSize: 11,
+    color: Colors.navyMid,
+    marginTop: 5,
+    fontWeight: '600',
   },
   details: {
     borderTopWidth: 1,
@@ -304,6 +377,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.textMuted,
     padding: 20,
+  },
+  anatomyCard: {
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 13,
+    padding: 12,
+    marginBottom: 14,
+    alignItems: 'center',
+  },
+  anatomyImage: {
+    width: '100%',
+    height: 210,
+  },
+  imageCaption: {
+    color: Colors.navyMid,
+    fontSize: 12,
+    fontWeight: '600',
+    marginTop: 5,
   },
   partCard: {
     flexDirection: 'row',
@@ -336,5 +428,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 3,
+  },
+  structureCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
+  },
+  structureImage: {
+    width: 105,
+    height: 105,
+    borderRadius: 10,
+    backgroundColor: '#F1F6FC',
+    marginRight: 13,
+  },
+  structureText: {
+    flex: 1,
   },
 })

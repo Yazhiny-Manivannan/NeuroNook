@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import {
   ActivityIndicator,
   FlatList,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -14,9 +15,22 @@ import { useRouter } from 'expo-router'
 import { Colors } from '../../constants/Colors'
 import { getAllBrainRegions } from '../../database/brainRegionQueries'
 
+// Local brain-region illustrations.
+const regionImages = {
+  amygdala: require('../../assets/brain-regions/amygdala.png'),
+  brainstem: require('../../assets/brain-regions/brainstem.png'),
+  cerebellum: require('../../assets/brain-regions/cerebellum.png'),
+  cerebrum: require('../../assets/brain-regions/cerebrum.png'),
+  'frontal lobe': require('../../assets/brain-regions/frontal-lobe.png'),
+  hippocampus: require('../../assets/brain-regions/hippocampus.png'),
+  hypothalamus: require('../../assets/brain-regions/hypothalamus.png'),
+  'parietal lobe': require('../../assets/brain-regions/parietal-lobe.png'),
+  'temporal lobe': require('../../assets/brain-regions/temporal-lobe.png'),
+  thalamus: require('../../assets/brain-regions/thalamus.png'),
+}
+
 const categories = ['All', 'Major regions', 'Lobes', 'Structures']
 
-// Identify the category of each brain region.
 const getCategory = (name) => {
   const lowerName = name.toLowerCase()
 
@@ -100,7 +114,6 @@ const BrainExplorer = () => {
     })
   }
 
-  // Loading screen.
   if (loading) {
     return (
       <View style={styles.center}>
@@ -110,7 +123,6 @@ const BrainExplorer = () => {
     )
   }
 
-  // Error screen.
   if (error) {
     return (
       <View style={styles.center}>
@@ -122,7 +134,6 @@ const BrainExplorer = () => {
   return (
     <View style={styles.container}>
 
-      {/* Screen heading */}
       <Text style={styles.heading}>Explore the Brain</Text>
 
       <Text style={styles.subtitle}>
@@ -172,7 +183,7 @@ const BrainExplorer = () => {
         {filteredRegions.length} brain region(s) found
       </Text>
 
-      {/* Brain region list */}
+      {/* Brain region cards */}
       <FlatList
         data={filteredRegions}
         keyExtractor={(item) => String(item.id)}
@@ -184,21 +195,33 @@ const BrainExplorer = () => {
             style={styles.card}
             onPress={() => openRegion(item)}
           >
-            <View style={styles.cardHeader}>
+            <View style={styles.cardImageContainer}>
+              <Image
+                source={regionImages[item.name.toLowerCase()]}
+                style={styles.regionImage}
+                resizeMode="contain"
+                accessibilityLabel={`${item.name} illustration`}
+              />
+            </View>
+
+            <View style={styles.cardContent}>
               <Text style={styles.regionName}>
                 {item.name}
               </Text>
 
-              <Text style={styles.arrow}>›</Text>
+              <Text
+                style={styles.description}
+                numberOfLines={3}
+              >
+                {item.short_description}
+              </Text>
+
+              <Text style={styles.cardCategory}>
+                {getCategory(item.name)}
+              </Text>
             </View>
 
-            <Text style={styles.description}>
-              {item.short_description}
-            </Text>
-
-            <Text style={styles.cardCategory}>
-              {getCategory(item.name)}
-            </Text>
+            <Text style={styles.arrow}>›</Text>
           </Pressable>
         )}
         ListEmptyComponent={
@@ -305,41 +328,58 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderWidth: 1,
     borderColor: Colors.border,
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 16,
+    padding: 12,
+    marginBottom: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
 
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  cardImageContainer: {
+    width: 105,
+    height: 105,
+    backgroundColor: Colors.lightBlue,
+    borderRadius: 12,
+    justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
+  },
+
+  regionImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  cardContent: {
+    flex: 1,
+    justifyContent: 'center',
   },
 
   regionName: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.navy,
-    flex: 1,
-  },
-
-  arrow: {
-    fontSize: 26,
-    color: Colors.navyMid,
   },
 
   description: {
     color: Colors.textMuted,
-    fontSize: 14,
-    lineHeight: 21,
-    marginTop: 8,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 5,
   },
 
   cardCategory: {
     color: Colors.navyMid,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
-    marginTop: 12,
+    marginTop: 8,
+  },
+
+  arrow: {
+    fontSize: 25,
+    color: Colors.navyMid,
+    paddingHorizontal: 2,
   },
 
   center: {

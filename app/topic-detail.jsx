@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
+  Image,
   Linking,
   Pressable,
   ScrollView,
@@ -18,12 +19,26 @@ import {
   isTopicSaved,
 } from '../database/savedTopicQueries'
 
-const TopicDetail = () => {
+const regionImages = {
+  amygdala: require('../assets/brain-regions/amygdala.png'),
+  brainstem: require('../assets/brain-regions/brainstem.png'),
+  cerebellum: require('../assets/brain-regions/cerebellum.png'),
+  cerebrum: require('../assets/brain-regions/cerebrum.png'),
+  'frontal lobe': require('../assets/brain-regions/frontal-lobe.png'),
+  hippocampus: require('../assets/brain-regions/hippocampus.png'),
+  hypothalamus: require('../assets/brain-regions/hypothalamus.png'),
+  'parietal lobe': require('../assets/brain-regions/parietal-lobe.png'),
+  'temporal lobe': require('../assets/brain-regions/temporal-lobe.png'),
+  thalamus: require('../assets/brain-regions/thalamus.png'),
+}
+
+export default function TopicDetail() {
   const { id, title } = useLocalSearchParams()
+  const regionId = Number(id)
 
   const [region, setRegion] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState('')
   const [isSaved, setIsSaved] = useState(false)
   const [saving, setSaving] = useState(false)
 
@@ -32,28 +47,16 @@ const TopicDetail = () => {
 
     const loadRegion = async () => {
       try {
-        const regionId = Number(Array.isArray(id) ? id[0] : id)
-
-        if (!Number.isInteger(regionId) || regionId <= 0) {
-          throw new Error('Invalid brain region ID.')
-        }
-
         const data = await getBrainRegionById(regionId)
         const saved = await isTopicSaved(regionId)
-
-        if (!data) {
-          throw new Error('Brain region not found.')
-        }
 
         if (isMounted) {
           setRegion(data)
           setIsSaved(saved)
         }
       } catch (err) {
-        console.error('Failed to load brain region:', err)
-
         if (isMounted) {
-          setError(err.message || 'Unable to load information.')
+          setError('Unable to load this brain region.')
         }
       } finally {
         if (isMounted) {
@@ -67,185 +70,260 @@ const TopicDetail = () => {
     return () => {
       isMounted = false
     }
-  }, [id])
+  }, [regionId])
 
-  const openSource = (url) => {
-    Linking.openURL(url).catch((err) => {
-      console.error('Unable to open source:', err)
-    })
+  const openSource = async (url) => {
+    if (!url) return
+
+    try {
+      await Linking.openURL(url)
+    } catch (err) {
+      console.log('Unable to open reference:', err)
+    }
   }
 
   const toggleSave = async () => {
-  if (!region || saving) return
+    if (!region || saving) return
 
-  try {
-    setSaving(true)
+    try {
+      setSaving(true)
 
-    if (isSaved) {
-      await removeSavedTopic(region.id)
-      setIsSaved(false)
-    } else {
-      await saveTopic(region.id)
-      setIsSaved(true)
+      if (isSaved) {
+        await removeSavedTopic(regionId)
+        setIsSaved(false)
+      } else {
+        await saveTopic(regionId)
+        setIsSaved(true)
+      }
+    } catch (err) {
+      console.log('Unable to update saved topic:', err)
+    } finally {
+      setSaving(false)
     }
-  } catch (err) {
-    console.error('Bookmark operation failed:', err)
-  } finally {
-    setSaving(false)
   }
-}
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={Colors.navy} />
+        <Text style={styles.loadingText}>Loading topic...</Text>
+      </View>
+    )
+  }
+
+  if (error || !region) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.errorText}>
+          {error || 'Brain region not found.'}
+        </Text>
+      </View>
+    )
+  }
+
+  const regionImage =
+    regionImages[region.name.toLowerCase().trim()]
+
   return (
-    <View style={styles.container}>
+    <>
       <Stack.Screen
         options={{
-          title: region?.name || title || 'Brain Region',
+          title: title || region.name,
+          headerTintColor: Colors.navy,
+          headerTitleStyle: { fontWeight: '700' },
         }}
       />
 
-      {loading ? (
-        <View style={styles.center}>
-          <ActivityIndicator size="large" color={Colors.navy} />
-          <Text style={styles.message}>Loading information...</Text>
-        </View>
-      ) : error ? (
-        <View style={styles.center}>
-          <Text style={styles.error}>{error}</Text>
-        </View>
-      ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.card}>
-            <Text style={styles.title}>{region.name}</Text>
-            <Pressable
-              onPress={toggleSave}
-              disabled={saving}
-              style={styles.bookmarkButton}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.card}>
+          <Text style={styles.title}>{region.name}</Text>
+
+          {regionImage && (
+            <View style={styles.imageContainer}>
+              <Image
+                source={regionImage}
+                style={styles.regionImage}
+                resizeMode="contain"
+                accessibilityLabel={`${region.name} brain illustration`}
+              />
+            </View>
+          )}
+
+          <Pressable
+            style={[
+              styles.saveButton,
+              isSaved && styles.savedButton,
+              saving && styles.disabledButton,
+            ]}
+            onPress={toggleSave}
+            disabled={saving}
+          >
+            <Text
+              style={[
+                styles.saveButtonText,
+                isSaved && styles.savedButtonText,
+              ]}
             >
-              <Text style={styles.bookmarkText}>
-                {saving
-                  ? 'Please wait...'
-                  : isSaved
-                    ? '✓ Saved Topic'
-                    : '☆ Save Topic'}
-              </Text>
-            </Pressable>
-            <Text style={styles.shortDescription}>
-              {region.short_description}
+              {saving
+                ? 'Updating...'
+                : isSaved
+                  ? '✓ Saved Topic'
+                  : '☆ Save Topic'}
             </Text>
+          </Pressable>
 
-            <View style={styles.divider} />
+          <Text style={styles.description}>
+            {region.short_description}
+          </Text>
 
-            <Text style={styles.heading}>Overview</Text>
-            <Text style={styles.body}>{region.description}</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Overview</Text>
+            <Text style={styles.bodyText}>{region.overview}</Text>
+          </View>
 
-            <Text style={styles.heading}>Location</Text>
-            <Text style={styles.body}>{region.location}</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Location</Text>
+            <Text style={styles.bodyText}>{region.location}</Text>
+          </View>
 
-            <Text style={styles.heading}>Main Functions</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Main Functions</Text>
 
-            {region.functions.map((item, index) => (
+            {region.functions?.map((item, index) => (
               <View key={index} style={styles.functionRow}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.functionText}>{item}</Text>
               </View>
             ))}
+          </View>
 
-            <View style={styles.divider} />
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>References</Text>
 
-            <Text style={styles.heading}>References</Text>
-
-            <Pressable
-              onPress={() => openSource(region.source_url)}
-              style={styles.sourceButton}
-            >
-              <Text style={styles.sourceName}>
-                {region.source_name} ↗
-              </Text>
-            </Pressable>
-
-            {region.additional_sources.map((source, index) => (
+            {region.references?.map((reference, index) => (
               <Pressable
                 key={index}
-                onPress={() => openSource(source.source_url)}
-                style={styles.sourceButton}
+                style={styles.referenceButton}
+                onPress={() => openSource(reference.url)}
               >
-                <Text style={styles.sourceName}>
-                  {source.source_name} ↗
+                <Text style={styles.referenceText}>
+                  {reference.title} ↗
                 </Text>
               </Pressable>
             ))}
           </View>
-        </ScrollView>
-      )}
-    </View>
+        </View>
+      </ScrollView>
+    </>
   )
 }
-
-export default TopicDetail
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.lightBlue,
-    padding: 18,
+  },
+  content: {
+    padding: 16,
+    paddingBottom: 30,
   },
   card: {
     backgroundColor: Colors.white,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 20,
-    marginBottom: 20,
+    elevation: 3,
   },
   title: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: Colors.navy,
+    marginBottom: 16,
   },
-  shortDescription: {
+  imageContainer: {
+    width: '100%',
+    height: 220,
+    backgroundColor: Colors.lightBlue,
+    borderRadius: 14,
+    overflow: 'hidden',
+    marginBottom: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  regionImage: {
+    width: '100%',
+    height: '100%',
+  },
+  saveButton: {
+    backgroundColor: Colors.navy,
+    paddingVertical: 13,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  savedButton: {
+    backgroundColor: Colors.lightBlue,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  disabledButton: {
+    opacity: 0.6,
+  },
+  saveButtonText: {
+    color: Colors.white,
     fontSize: 15,
-    color: Colors.navyMid,
-    lineHeight: 23,
-    marginTop: 10,
+    fontWeight: '700',
   },
-  divider: {
-    height: 1,
-    backgroundColor: Colors.border,
-    marginVertical: 20,
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  savedButtonText: {
     color: Colors.navy,
+  },
+  description: {
+    fontSize: 16,
+    lineHeight: 25,
+    color: Colors.textMuted,
+    marginBottom: 20,
+  },
+  section: {
     marginTop: 18,
+  },
+  sectionTitle: {
+    fontSize: 19,
+    fontWeight: '800',
+    color: Colors.navy,
     marginBottom: 9,
   },
-  body: {
+  bodyText: {
     fontSize: 15,
-    color: Colors.textMuted,
     lineHeight: 24,
+    color: Colors.textMuted,
   },
   functionRow: {
     flexDirection: 'row',
-    marginBottom: 9,
+    alignItems: 'flex-start',
+    marginBottom: 8,
   },
   bullet: {
-    color: Colors.navyMid,
     fontSize: 18,
-    marginRight: 10,
+    color: Colors.navyMid,
+    marginRight: 9,
+    lineHeight: 23,
   },
   functionText: {
     flex: 1,
     fontSize: 15,
-    color: Colors.textMuted,
     lineHeight: 23,
+    color: Colors.textMuted,
   },
-  sourceButton: {
+  referenceButton: {
     backgroundColor: Colors.lightBlue,
-    borderRadius: 9,
     padding: 12,
-    marginTop: 8,
+    borderRadius: 10,
+    marginBottom: 8,
   },
-  sourceName: {
+  referenceText: {
     color: Colors.navyMid,
     fontSize: 14,
     fontWeight: '600',
@@ -254,29 +332,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  message: {
-    marginTop: 12,
-    color: Colors.navy,
-  },
-  error: {
-    color: Colors.navy,
-    textAlign: 'center',
-  },
-
-  bookmarkButton: {
     backgroundColor: Colors.lightBlue,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 10,
-    padding: 12,
-    marginTop: 14,
-    alignItems: 'center',
+    padding: 20,
   },
-
-  bookmarkText: {
+  loadingText: {
     color: Colors.navy,
+    marginTop: 12,
     fontSize: 15,
-    fontWeight: 'bold',
+  },
+  errorText: {
+    color: Colors.navy,
+    fontSize: 16,
+    textAlign: 'center',
   },
 })
