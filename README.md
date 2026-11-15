@@ -68,6 +68,45 @@ The application provides educational content, illustrated learning materials, in
 
 ---
 
+
+## 📱 Application Screenshots
+
+Explore the NeuroNook application through the screenshots below.
+
+<table>
+  <tr>
+    <td align="center">
+      <strong>Home</strong><br/>
+      <img src="assets/screenshots/Home.jpeg" width="220" alt="NeuroNook Home Screen"/>
+    </td>
+    <td align="center">
+      <strong>Brain Explorer</strong><br/>
+      <img src="assets/screenshots/Brain_Explorer.jpeg" width="220" alt="Brain Explorer"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Neuron Library</strong><br/>
+      <img src="assets/screenshots/Neuron_Library.jpeg" width="220" alt="Neuron Library"/>
+    </td>
+    <td align="center">
+      <strong>Knowledge Hub</strong><br/>
+      <img src="assets/screenshots/Knowledge_Hub.jpeg" width="220" alt="Knowledge Hub"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Saved Topics</strong><br/>
+      <img src="assets/screenshots/Saved_Topics.jpeg" width="220" alt="Saved Topics"/>
+    </td>
+    <td align="center">
+      <strong>Saved Topics — Additional View</strong><br/>
+      <img src="assets/screenshots/With_Saved_Topics.jpeg" width="220" alt="Saved Topics additional view"/>
+    </td>
+  </tr>
+</table>
+
+
 ## 🛠️ Technologies Used
 
 | Technology   | Purpose                             |
